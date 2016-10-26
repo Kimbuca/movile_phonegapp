@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8"/>
+
+  <!-- JQuery, no se me lo pide semantics -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+
+  <script type="text/javascript" src="dist/semantic.min.js"></script>
+  <script type="text/javascript" src="js/functions.js"></script>
+
+  <!-- Necesary for jstorage, for storing JSON
+  <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
+  <script src="https://raw.github.com/andris9/jStorage/master/jstorage.js"></script>-->
+
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="dist/semantic.min.css"  media="screen,projection"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+
+  <!-- ya venian -->
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+  <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+
+
+  <!-- populating table -->
+  <script>
+
+
+    var tableContent = "<thead> <tr><th>userid</th><th>ID</th><th>Title</th><th>Body</th><th><tbody></th></tr>";
+    var individual = "";
+
+
+    //This executes first
+    //document.addEventListener("deviceready", function(){
+
+
+    $(document).ready(function (){   //in browser works.....
+        //console.log( "ready!" );
+        //var jResult = $.jStorage.get("jsonResult");
+        var jResult = localStorage.getItem("jArray");
+        var parsedRes = (JSON.parse(jResult));
+        console.log(JSON.parse(jResult));
+        //var result = JSON.parse(jResult);
+        //console.log(result);
+        yey(parsedRes);
+
+
+
+    });
+
+
+
+
+  //called by readyness
+
+  function yey(jResult) {
+    $.each(jResult, function(i, item){
+        //alert("Mine is " + i + "|" + item.n + "|" + item.interest);
+        individual = "<tr> <td  class=\"collapsing\"> " +item.userId +"</td>" +"<td>" +item.id +"</td>"
+                      +"<td>" +item.title +"</td>" +"<td>" +item.body +"</td> </tr>";
+        //alert(individual);
+        tableContent += individual;
+        //tableContent.concat(individual);
+    });
+
+    tableContent += "</tbody>";
+    //console.log(tableContent);;
+    document.getElementById("jsonTable").innerHTML = tableContent;
+
+  }
+
+
+
+
+
+
+  </script>
+
+<title> JSON REQUEST</title>
+</head>
+
+
+<button class="ui blue button" onclick="goBack()">
+  Back
+</button>
+
+<body>
+
+<!-- mmh this may look weird on cellphone cause semantics responsiveness is limited -->
+<div class="ui grid">
+  <div class="two wide column"></div>
+
+  <div class="twelve wide column">
+    <table class="ui celled table" id="jsonTable">
+    </table>
+  </div>
+
+  <div class="two wide column"></div>
+
+</div>
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+</html>
